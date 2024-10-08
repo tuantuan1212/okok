@@ -1,0 +1,101 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+local targetPosition = CFrame.new(-181.720535, 151.352814, -267.498535, 0.932046711, -0.0145312892, -0.362046897, 3.14088538e-07, 0.999195576, -0.0401034132, 0.362338394, 0.0373781472, 0.931296885)
+
+local function rotateToTargetPosition()
+    while true do
+        character:SetPrimaryPartCFrame(targetPosition)
+        wait(1)
+    end
+end
+
+local function standStill()
+    character:SetPrimaryPartCFrame(targetPosition)
+end
+
+local function activateAbility(abilityKey)
+    if humanoid then
+        humanoid.WalkSpeed = 0
+    end
+
+    local virtualInputManager = game:GetService("VirtualInputManager")
+    print("Activating ability with key:", abilityKey)
+    virtualInputManager:SendKeyEvent(true, abilityKey, false, game)
+    wait(0.1)
+    virtualInputManager:SendKeyEvent(false, abilityKey, false, game)
+
+    standStill()
+
+    if humanoid then
+        humanoid.WalkSpeed = 16
+    end
+end
+
+local function switchWeapon1AndUseAbilities()
+    local virtualInputManager = game:GetService("VirtualInputManager")
+    print("Switching to weapon 1")
+    virtualInputManager:SendKeyEvent(true, Enum.KeyCode.One, false, game)
+    wait(0.5)
+    virtualInputManager:SendKeyEvent(false, Enum.KeyCode.One, false, game)
+
+    activateAbility(Enum.KeyCode.X)
+    wait(0.5)
+    activateAbility(Enum.KeyCode.Y)
+end
+
+local function switchWeapon2AndUseAbilities()
+    local virtualInputManager = game:GetService("VirtualInputManager")
+    print("Switching to weapon 2")
+    virtualInputManager:SendKeyEvent(true, Enum.KeyCode.Two, false, game)
+    wait(0.5)
+    virtualInputManager:SendKeyEvent(false, Enum.KeyCode.Two, false, game)
+
+    activateAbility(Enum.KeyCode.X)
+    wait(0.5)
+    activateAbility(Enum.KeyCode.Z)
+    wait(0.5)
+    activateAbility(Enum.KeyCode.C)
+end
+
+local function switchWeapon3AndUseAbilities()
+    local virtualInputManager = game:GetService("VirtualInputManager")
+    print("Switching to weapon 3")
+    virtualInputManager:SendKeyEvent(true, Enum.KeyCode.Three, false, game)
+    wait(0.5)
+    virtualInputManager:SendKeyEvent(false, Enum.KeyCode.Three, false, game)
+
+    activateAbility(Enum.KeyCode.Z)
+    wait(0.5)
+    activateAbility(Enum.KeyCode.X)
+end
+
+local function switchWeapon4AndUseAbilities()
+    local virtualInputManager = game:GetService("VirtualInputManager")
+    print("Switching to weapon 4")
+    virtualInputManager:SendKeyEvent(true, Enum.KeyCode.Four, false, game) -- Thay đổi thành Enum.KeyCode.Four nếu phím tắt là 4
+    wait(0.5)
+    virtualInputManager:SendKeyEvent(false, Enum.KeyCode.Four, false, game)
+
+    activateAbility(Enum.KeyCode.Z)
+    wait(0.5)
+    activateAbility(Enum.KeyCode.X)
+end
+
+local function loopSwitchAndUse()
+    while true do
+        switchWeapon1AndUseAbilities()
+        wait(0.1)
+        switchWeapon2AndUseAbilities()
+        wait(0.1)
+        switchWeapon3AndUseAbilities()
+        wait(0.1)
+        switchWeapon4AndUseAbilities()
+        wait(0.1)
+    end
+end
+
+print("Script started")
+spawn(rotateToTargetPosition)
+loopSwitchAndUse()
