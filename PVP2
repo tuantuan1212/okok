@@ -6,7 +6,7 @@ local virtualInputManager = game:GetService("VirtualInputManager")
 local humanoid = character:FindFirstChildOfClass("Humanoid")
 
 -- Tọa độ ban đầu
-local targetPosition = CFrame.new(-639.295166, 74.7728729, -225.293991)
+local targetPosition = CFrame.new(-737.943237, 74.9859161, 34.4008484, 0.52490741, -0.0237223599, 0.850828588, -0.00857717544, 0.999413371, 0.0331566781, -0.851116061, -0.0247018971, 0.524396002)
 
 -- Hàm di chuyển đến tọa độ
 local function teleportTo(position)
