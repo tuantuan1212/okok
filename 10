@@ -68,29 +68,29 @@ _G.FarmMastery_Settings = {
     }
 }
 _G.SwordSettings = { -- ดาบที่จะทำ
-    ['Saber'] = true,
-    ["Pole"] = true,
-    ['MidnightBlade'] = true,
-    ['Shisui'] = true,
-    ['Saddi'] = true,
-    ['Wando'] = true,
+    ['Saber'] = false,
+    ["Pole"] = false,
+    ['MidnightBlade'] = false,
+    ['Shisui'] = false,
+    ['Saddi'] = false,
+    ['Wando'] = false,
     ['Yama'] = true,
     ['Rengoku'] = true,
     ['Canvander'] = true,
-    ['BuddySword'] = true,
+    ['BuddySword'] = false,
     ['TwinHooks'] = true,
     ['HallowScryte'] = true,
-    ['TrueTripleKatana'] = true,
+    ['TrueTripleKatana'] = false,
     ['CursedDualKatana'] = true
 }
 _G.SharkAnchor_Settings = {
-    ["Enabled_Farm"] = true,
-    ['FarmAfterMoney'] = 2500000
+    ["Enabled_Farm"] = false,
+    ['FarmAfterMoney'] = 1
 }
 _G.GunSettings = { -- ปืนที่จะทำ
-    ['Kabucha'] = true,
-    ['SerpentBow'] = true,
-    ['SoulGuitar'] = true
+    ['Kabucha'] = false,
+    ['SerpentBow'] = false,
+    ['SoulGuitar'] = false,
 }
 -- Script Here !!!
 getgenv().Key = "MARU-YR72-BKJ63-F3Y1-CX0EH-HN7G"
