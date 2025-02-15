@@ -1,11 +1,10 @@
-local playerGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+local lp = game.Players.LocalPlayer
+local stats = lp:FindFirstChild("leaderstats")
 
-if playerGui then
-    for _, v in pairs(playerGui:GetDescendants()) do
-        if v:IsA("TextLabel") and string.find(v.Text, "Beli") then
-            print("Đã tìm thấy Beli trên UI:", v.Text)
-        end
+if stats then
+    for _, v in pairs(stats:GetChildren()) do
+        print("Tên:", v.Name, " | Giá trị:", v.Value)
     end
 else
-    print("Không tìm thấy PlayerGui!")
+    print("Không tìm thấy leaderstats!")
 end
