@@ -1,21 +1,6 @@
 local HttpService = game:GetService("HttpService")
 local lp = game:GetService("Players").LocalPlayer
-
--- 🔹 Lấy IP từ server Python
-local function getServerIP()
-    local success, result = pcall(function()
-        return HttpService:GetAsync("http://192.168.1.10:5001/get-ip")
-    end)
-    if success then
-        local data = HttpService:JSONDecode(result)
-        return data.ip
-    end
-    return "192.168.1.10" -- Dự phòng
-end
-
-local serverIP = getServerIP()
-local serverUrl = "http://" .. serverIP .. ":5000/data"
-print("📌 Server URL:", serverUrl)
+local serverUrl = "http://192.168.1.3:5000/data" -- Đổi IP thành IP máy tính anh
 
 local function getData()
     local stats = lp:FindFirstChild("leaderstats")
@@ -25,13 +10,16 @@ local function getData()
         Level = stats and stats:FindFirstChild("Level") and stats.Level.Value or 0,
         Beli = stats and stats:FindFirstChild("Beli") and stats.Beli.Value or 0,
         Fragments = stats and stats:FindFirstChild("Fragments") and stats.Fragments.Value or 0,
-        DevilFruit = lp:FindFirstChild("DevilFruit") and lp.DevilFruit.Value or "None"
+        DevilFruit = lp:FindFirstChild("DevilFruit") and lp.DevilFruit.Value or "None",
+        TimeStamp = os.time()  -- Gửi thêm thời gian
     }
 end
 
 while true do
     local jsonData = HttpService:JSONEncode(getData())
-    pcall(function() HttpService:PostAsync(serverUrl, jsonData, Enum.HttpContentType.ApplicationJson) end)
+    pcall(function() 
+        HttpService:PostAsync(serverUrl, jsonData, Enum.HttpContentType.ApplicationJson)
+    end)
     print("[✅] Đã gửi dữ liệu về máy tính!")
     wait(10)
 end
