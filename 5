@@ -1,30 +1,29 @@
-local Players = game:GetService("Players")
-local lp = Players.LocalPlayer
+local lp = game.Players.LocalPlayer
+local StarterGui = game:GetService("StarterGui")
 
-local function checkBeliAndShutdown()
-    local stats = lp:WaitForChild("leaderstats", 10)  -- Đợi leaderstats trong 10 giây
-    if stats then
-        local beli = stats:FindFirstChild("Beli")
-        if beli then
-            print("[💰] Beli hiện tại:", beli.Value) -- Debug để kiểm tra
-            if beli.Value < 50000000 then
-                warn("[⚠️] Beli dưới 50M! Đang thoát game...")
-                lp:Kick("Beli dưới 50M! Hãy kiếm thêm tiền trước khi vào lại.")
-            else
-                print("[✅] Beli đủ, tiếp tục chạy.")
-            end
-        else
-            warn("[❌] Không tìm thấy Beli!")
+task.wait(5) -- Chờ 5 giây để đảm bảo dữ liệu đã load
+
+local stats = lp:FindFirstChild("leaderstats")
+
+if stats then
+    local beli = stats:FindFirstChild("Beli") -- Hoặc "Money", "Cash"
+
+    if beli then
+        -- 🔥 Hiển thị thông báo số Beli trên màn hình
+        StarterGui:SetCore("SendNotification", {
+            Title = "Thông báo",
+            Text = "Số Beli của bạn: " .. beli.Value,
+            Duration = 5
+        })
+
+        -- Kiểm tra và thoát game nếu dưới 50M Beli
+        if beli.Value < 50000000 then
+            task.wait(1)
+            game:Shutdown()
         end
     else
-        warn("[❌] Không tìm thấy leaderstats!")
+        print("Không tìm thấy biến Beli!")
     end
-end
-
--- Kiểm tra ngay khi chạy script
-checkBeliAndShutdown()
-
--- Kiểm tra lại mỗi 10 giây
-while task.wait(10) do
-    checkBeliAndShutdown()
+else
+    print("Không tìm thấy leaderstats!")
 end
