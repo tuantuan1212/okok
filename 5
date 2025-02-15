@@ -1,25 +1,8 @@
 local lp = game.Players.LocalPlayer
-local stats = lp:FindFirstChild("leaderstats")
 
-if stats then
-    local beli = stats:FindFirstChild("Beli")
-    if beli then
-        game.StarterGui:SetCore("SendNotification", {
-            Title = "Số Beli",
-            Text = "Bạn có: " .. tostring(beli.Value) .. " Beli",
-            Duration = 5
-        })
-    else
-        game.StarterGui:SetCore("SendNotification", {
-            Title = "Lỗi",
-            Text = "Không tìm thấy Beli!",
-            Duration = 5
-        })
-    end
-else
-    game.StarterGui:SetCore("SendNotification", {
-        Title = "Lỗi",
-        Text = "Không tìm thấy leaderstats!",
-        Duration = 5
-    })
-end
+lp.ChildAdded:Connect(function(child)
+    print("Đã thêm:", child.Name, child.ClassName)
+end)
+
+task.wait(5) -- Chờ 5 giây để kiểm tra
+print("Dữ liệu nhân vật đã load xong!")
