@@ -1,8 +1,11 @@
-local lp = game.Players.LocalPlayer
+local playerGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui")
 
-lp.ChildAdded:Connect(function(child)
-    print("Đã thêm:", child.Name, child.ClassName)
-end)
-
-task.wait(5) -- Chờ 5 giây để kiểm tra
-print("Dữ liệu nhân vật đã load xong!")
+if playerGui then
+    for _, v in pairs(playerGui:GetDescendants()) do
+        if v:IsA("TextLabel") and string.find(v.Text, "Beli") then
+            print("Đã tìm thấy Beli trên UI:", v.Text)
+        end
+    end
+else
+    print("Không tìm thấy PlayerGui!")
+end
