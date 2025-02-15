@@ -4,22 +4,10 @@ local stats = lp:FindFirstChild("leaderstats")
 if stats then
     local beli = stats:FindFirstChild("Beli")
     if beli then
-        game.StarterGui:SetCore("SendNotification", {
-            Title = "Số Beli";
-            Text = "Bạn có: " .. beli.Value .. " Beli!";
-            Duration = 5;
-        })
+        print("Số Beli của bạn:", beli.Value)
     else
-        game.StarterGui:SetCore("SendNotification", {
-            Title = "Lỗi";
-            Text = "Không tìm thấy Beli!";
-            Duration = 5;
-        })
+        print("Không tìm thấy Beli trong leaderstats!")
     end
 else
-    game.StarterGui:SetCore("SendNotification", {
-        Title = "Lỗi";
-        Text = "Không tìm thấy leaderstats!";
-        Duration = 5;
-    })
+    print("Không tìm thấy leaderstats!")
 end
