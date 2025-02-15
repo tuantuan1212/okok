@@ -5,8 +5,8 @@ if stats then
     local beli = stats:FindFirstChild("Beli")
     if beli then
         game.StarterGui:SetCore("SendNotification", {
-            Title = "Beli Check",
-            Text = "Số Beli: " .. beli.Value,
+            Title = "Số Beli",
+            Text = "Bạn có: " .. tostring(beli.Value) .. " Beli",
             Duration = 5
         })
     else
