@@ -2,24 +2,29 @@ local Players = game:GetService("Players")
 local lp = Players.LocalPlayer
 
 local function checkBeliAndShutdown()
-    local stats = lp:FindFirstChild("leaderstats")
+    local stats = lp:WaitForChild("leaderstats", 10)  -- Đợi leaderstats trong 10 giây
     if stats then
         local beli = stats:FindFirstChild("Beli")
-        if beli and beli.Value < 2000000 then
-            warn("[⚠️] Beli dưới 2M! Đang thoát game...")
-            lp:Kick("Beli dưới 2M! Hãy kiếm thêm tiền trước khi vào lại.")
+        if beli then
+            print("[💰] Beli hiện tại:", beli.Value) -- Debug để kiểm tra
+            if beli.Value < 50000000 then
+                warn("[⚠️] Beli dưới 50M! Đang thoát game...")
+                lp:Kick("Beli dưới 50M! Hãy kiếm thêm tiền trước khi vào lại.")
+            else
+                print("[✅] Beli đủ, tiếp tục chạy.")
+            end
         else
-            print("[✅] Beli đủ, tiếp tục chạy.")
+            warn("[❌] Không tìm thấy Beli!")
         end
     else
-        warn("[⚠️] Không tìm thấy leaderstats!")
+        warn("[❌] Không tìm thấy leaderstats!")
     end
 end
 
--- Kiểm tra ngay lập tức khi script chạy
+-- Kiểm tra ngay khi chạy script
 checkBeliAndShutdown()
 
--- Kiểm tra định kỳ mỗi 10 giây
-while wait(10) do
+-- Kiểm tra lại mỗi 10 giây
+while task.wait(10) do
     checkBeliAndShutdown()
 end
