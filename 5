@@ -1,7 +1,8 @@
 local HttpService = game:GetService("HttpService")
 local lp = game:GetService("Players").LocalPlayer
-local serverUrl = "http://192.168.1.3:5000/data" -- Đổi IP thành IP máy tính anh
+local serverUrl = "http://192.168.1.3:5000/data" -- Đổi IP theo máy tính anh
 
+-- Hàm lấy dữ liệu tài khoản
 local function getData()
     local stats = lp:FindFirstChild("leaderstats")
     return {
@@ -10,16 +11,21 @@ local function getData()
         Level = stats and stats:FindFirstChild("Level") and stats.Level.Value or 0,
         Beli = stats and stats:FindFirstChild("Beli") and stats.Beli.Value or 0,
         Fragments = stats and stats:FindFirstChild("Fragments") and stats.Fragments.Value or 0,
-        DevilFruit = lp:FindFirstChild("DevilFruit") and lp.DevilFruit.Value or "None",
-        TimeStamp = os.time()  -- Gửi thêm thời gian
+        DevilFruit = lp:FindFirstChild("DevilFruit") and lp.DevilFruit.Value or "None"
     }
 end
 
 while true do
     local jsonData = HttpService:JSONEncode(getData())
-    pcall(function() 
-        HttpService:PostAsync(serverUrl, jsonData, Enum.HttpContentType.ApplicationJson)
+    local success, response = pcall(function()
+        return HttpService:PostAsync(serverUrl, jsonData, Enum.HttpContentType.ApplicationJson)
     end)
-    print("[✅] Đã gửi dữ liệu về máy tính!")
-    wait(10)
+
+    if success then
+        print("[✅] Gửi dữ liệu thành công!")
+    else
+        print("[❌] Không gửi được dữ liệu, kiểm tra server Python!")
+    end
+
+    wait(10) -- Cập nhật mỗi 10 giây
 end
