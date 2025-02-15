@@ -1,21 +1,8 @@
 local HttpService = game:GetService("HttpService")
-local lp = game:GetService("Players").LocalPlayer
-local serverUrl = "http://192.168.1.3:5000/data" -- Thay IP máy tính của anh
+local serverUrl = "http://192.168.1.3:5000/data"
 
-local function getData()
-    local stats = lp:FindFirstChild("leaderstats")
-    return {
-        Username = lp.Name,
-        UserID = lp.UserId,
-        Level = stats and stats:FindFirstChild("Level") and stats.Level.Value or 0,
-        Beli = stats and stats:FindFirstChild("Beli") and stats.Beli.Value or 0,
-        Fragments = stats and stats:FindFirstChild("Fragments") and stats.Fragments.Value or 0,
-        DevilFruit = lp:FindFirstChild("DevilFruit") and lp.DevilFruit.Value or "None"
-    }
-end
-
-while wait(10) do
-    local jsonData = HttpService:JSONEncode(getData())
+local function sendTest()
+    local jsonData = HttpService:JSONEncode({message = "Test từ Lua"})
     local success, response = pcall(function()
         return HttpService:PostAsync(serverUrl, jsonData, Enum.HttpContentType.ApplicationJson)
     end)
@@ -26,3 +13,5 @@ while wait(10) do
         print("[❌] Lỗi khi gửi dữ liệu:", response)
     end
 end
+
+sendTest()
