@@ -1,29 +1,35 @@
 local lp = game.Players.LocalPlayer
-local StarterGui = game:GetService("StarterGui")
+local PlayerGui = lp:FindFirstChild("PlayerGui")
 
-task.wait(5) -- Chờ 5 giây để đảm bảo dữ liệu đã load
+task.wait(5) -- Chờ dữ liệu load
 
 local stats = lp:FindFirstChild("leaderstats")
 
 if stats then
-    local beli = stats:FindFirstChild("Beli") -- Hoặc "Money", "Cash"
+    local beli = stats:FindFirstChild("Beli") or stats:FindFirstChild("Money") or stats:FindFirstChild("Cash") or stats:FindFirstChild("MoneyValue")
 
     if beli then
-        -- 🔥 Hiển thị thông báo số Beli trên màn hình
-        StarterGui:SetCore("SendNotification", {
-            Title = "Thông báo",
-            Text = "Số Beli của bạn: " .. beli.Value,
-            Duration = 5
-        })
+        print("🔹 Số Beli:", beli.Value)
 
-        -- Kiểm tra và thoát game nếu dưới 50M Beli
+        -- Tạo GUI hiển thị số Beli trên màn hình
+        local screenGui = Instance.new("ScreenGui", PlayerGui)
+        local textLabel = Instance.new("TextLabel", screenGui)
+
+        textLabel.Size = UDim2.new(0.5, 0, 0.1, 0) -- Chiếm 50% chiều rộng, 10% chiều cao
+        textLabel.Position = UDim2.new(0.25, 0, 0.05, 0) -- Căn giữa trên cùng
+        textLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Màu nền đen
+        textLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- Chữ màu trắng
+        textLabel.TextScaled = true
+        textLabel.Text = "Số Beli: " .. beli.Value
+
+        -- Kiểm tra nếu dưới 50M thì thoát game
         if beli.Value < 50000000 then
-            task.wait(1)
-            game:Shutdown()
+            task.wait(2) -- Chờ 2 giây trước khi out
+            lp:Kick("Bạn có dưới 50M Beli. Tự động thoát.") -- Văng khỏi game
         end
     else
-        print("Không tìm thấy biến Beli!")
+        print("❌ Không tìm thấy Beli!")
     end
 else
-    print("Không tìm thấy leaderstats!")
+    print("❌ Không tìm thấy leaderstats!")
 end
